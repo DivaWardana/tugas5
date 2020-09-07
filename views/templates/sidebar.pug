@@ -1,0 +1,23 @@
+ul.navbar-nav.sidebar.sidebar-light.accordion#accordionSidebar
+                a.sidebar-brand.d-flex.align-items-center.justify-content-center(href="/index")
+                    div.sidebar-brand-icon
+                        img(src="img/logo/logo.jpeg", alt="Logo")
+                    div.sidebar-brand-text.mx-3 Admin
+                hr.sidebar-divider.my-0
+                li.nav-item
+                    a.nav-link(href="/index")
+                        i.fas.fa-fw.fa-tachometer-alt
+                        span Dashboard
+                hr.sidebar-divider
+                div.sidebar-heading Features
+                li.nav-item
+                    a.nav-link.collapsed(href="#" data-toggle="collapse" data-target="#collapseBootstrap" aria-expanded="true" aria-controls="collapseBootstrap")
+                        i.far.fa-fw.fa-window-maximize
+                        span Master Data
+                    div#collapseBootstrap.collapse(aria-labelledby="headingBootstrap" data-parent="#accordionSidebar")
+                        div.bg-white.py-2.collapse-inner.rounded
+                            h6.collapse-header Master Data
+                            a.collapse-item(href="/users") Users            
+                            a.collapse-item(href="/produk") Produk
+                hr.sidebar-divider
+                div.version#version-ruangadmin

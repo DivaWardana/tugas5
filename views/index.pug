@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+html(lang="en")
+    //- header
+    include templates/header.pug
+    //- end header
+    body#page-top
+        div#wrapper
+            //- sidebar
+            include templates/sidebar.pug
+            //- end sidebar
+            div#content-wrapper.d-flex.flex-column
+                //- content
+                div.content
+                    //- navbar
+                    include templates/navbar.pug
+                    //- end navbar
+                    div.container-fluid#container-wrapper
+                        div.d-sm-flex.align-items-center.justify-content-between.mb-4
+                            h1.h3.mb-0.text-gray-800 Dashboard
+                            ol.breadcrumb
+                                li.breadcrumb-item #[a(href="./") Home]
+                                li.breadcrumb-item.active(aria-current="page") Dashboard
+                        div.row.mb-3
+                            div.col-xl-3.col-md-6.mb-4  
+                                div.card.h-100
+                                    div.card-body
+                                        div.row.align-items-center
+                                            div.col.mr-2
+                                                div.text-xs.font-weight-bold.text-uppercase.mb-1 Users
+                                                div.h5.mb-0.font-weight-bold.text-gray-800 #{usersTotal}
+                                                div.mt-2.mb-0.text-muted.text-xs
+                                                    span.text-success.mr-2 #[i.fa.fa-arrow-up] 3,48%
+                                                    span since last mount
+                                            div.col-auto
+                                                i.fas.fa-users.fa-2x.text-info
+                            div.col-xl-3.col-md-6.mb-4
+                                div.card.h-100
+                                    div.card-body
+                                        div.row.align-items-center
+                                            div.col.mr-2
+                                                div.text-xs.font-weight-bold.text-uppercase.mb-1 Produk
+                                                div.h5.mb-0.font-weight-bold.text-gray-800 #{produksTotal}
+                                                div.mt-2.mb-0.text-muted.text-xs
+                                                    span.text-success.mr-2 #[i.fa.fa-arrow-up] 3,48%
+                                                    span since last mount
+                                            div.col-auto
+                                                i.fas.fa-list-alt.fa-2x.text-primary
+                            div.col-xl-8.col-lg-5
+                                div.card.mb-4
+                                    div.card-header.py-3.d-flex.flex-row.align-items-center.justify-content-between
+                                        h6.m-0.font-weight-bold.text-primary List Produk
+                                    div.card-body
+
+                                        for produk in prods
+                                            div.mb-3
+                                                div.small.text-gray-500= produk.nama_produk
+                                                    div.small.float-right  Jumlah Stok 
+                                                        strong= produk.stok_produk
+                                                div.progress(style="height: 12px;")
+                                                    div.progress-bar(role="progressbar" class=`bg-${produk.warna}` style=`width: ${produk.stok_produk}%` aria-valuenow="80" aria-valuemin="0" aria-valuemax="100")
+                                        
+                                    div.card-footer.text-center
+                                        a.m-0.small.text-primary.card-link(href="/produk") View More #[i.fas.fa-chevron-right]
+                        //- end content
+                //- footer
+                include templates/footer.pug
+                //- end footer
+    //- untuk scroll ke atas
+    a(class="scroll-to-top rounded" href="#page-top")
+        i(class="fas fa-angle-up")
+        //-  embed script
+        script(src="./vendor/jquery/jquery.min.js")
+        script(src="./vendor/bootstrap/js/bootstrap.bundle.min.js")
+        script(src="./vendor/jquery-easing/jquery.easing.min.js")
+        script(src="./js/ruang-admin.min.js")
+        script(src="./vendor/chart.js/Chart.min.js")
+        script(src="./js/demo/chart-area-demo.js")
+        //- end embed script
+            

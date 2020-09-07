@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+html(lang="en")
+    //- header
+    include templates/header.pug
+    link(href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet")
+    //- end header
+    body#page-top
+        div#wrapper
+            //- sidebar
+            include templates/sidebar.pug
+            //- end sidebar
+            div#content-wrapper.d-flex.flex-column
+                //- content
+                div.content
+                    //- navbar
+                    include templates/navbar.pug
+                    //- end navbar
+                    div.container-fluid#container-wrapper
+                        div.d-sm-flex.align-items-center.justify-content-between.mb-4 
+                            h1.h3.mb-0.text-gray-800 Produk
+                            ol.breadcrumb 
+                                li.breadcrumb-item #[a(href="/index") Home]
+                                li.breadcrumb-item Master Data
+                                li.breadcrumb-item.active(aria-current="page") Produk 
+                        //- Row
+                        div.row 
+                            //- Datatables
+                            div.col-lg-12
+                                div.card.mb-4 
+                                    div.card-header.py-3.d-flex.flex-row.align-items-center.justify-content-between 
+                                        h6.m-0.font-weight-bold.text-primary Data Produk
+                                        button(type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#exampleModalCenter" id="#modalCenter") #[i.fa.fa-fw.fa-plus]
+                                    div.modal.fade#exampleModalCenter(tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true") 
+                                        div.modal-dialog.modal-dialog-centered.modal-lg(role="document") 
+                                            div.modal-content
+                                                div.modal-header
+                                                    h5.modal-title#exampleModalCenterTitle Form Tambah Produk
+                                                    button(type="button" class="close" data-dismiss="modal" aria-label="Close") 
+                                                        span(aria-hidden="true") &times;
+                                                div.modal-body
+                                                    form(action="/produk" method="post" enctype="multipart/form-data")
+                                                        div.row
+                                                            div.form-group
+                                                                label(for="kode_produk" class="control-label col") Kode Produk
+                                                                div.col-sm-12
+                                                                    input(type="text" class="form-control" id="kode_produk" placeholder="Masukan Kode Produk" name="kode_produk" required)
+                                                            div.form-group
+                                                                label(for="nama_produk" class="control-label col") Nama Produk
+                                                                div.col-sm-12
+                                                                    input(type="text" class="form-control" id="nama_produk" placeholder="Masukan Nama Produk" name="nama_produk" required)
+                                                            div.form-group
+                                                                label(for="kategori" class="control-label col") Kategori
+                                                                div.col-sm-12
+                                                                    select.form-control(name="kategori" id="kategori" required)
+                                                                        option(selected disabled) ---Pilih Kategori---
+                                                                        option(value="Fashion") Fashion
+                                                                        option(value="Aksesoris") Aksesoris
+                                                            div.form-group
+                                                                label(for="harga_produk" class="control-label col") Harga Produk
+                                                                div.col-sm-12
+                                                                    input(type="text" class="form-control" id="harga_produk" placeholder="Masukan Harga Produk" name="harga_produk" required)
+                                                            div.form-group
+                                                                label(for="stok_produk" class="control-label col") Stok Produk
+                                                                div.col-sm-12
+                                                                    input(type="text" class="form-control" id="stok_produk" placeholder="Masukan Stok Produk" name="stok_produk" required)
+                                                            div.form-group
+                                                                label(for="foto" class="control-label col") Foto
+                                                                div.col-sm-12
+                                                                    input(type="file" id="foto" name="foto")
+                                                            div.modal-footer 
+                                                                button(type="button" class="btn btn-secondary" data-dismiss="modal") Batal
+                                                                button(type="submit" class="btn btn-primary") Simpan
+                                    for produk in produks
+                                        div.modal.fade(id=`editModal-${produk.id}` tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true") 
+                                            div.modal-dialog.modal-dialog-centered.modal-lg(role="document") 
+                                                div.modal-content
+                                                    div.modal-header
+                                                        h5.modal-title#exampleModalCenterTitle Form Edit Produk
+                                                        button(type="button" class="close" data-dismiss="modal" aria-label="Close") 
+                                                            span(aria-hidden="true") &times;
+                                                    div.modal-body
+                                                        form(action="/editProduk" method="post" autocomplete="off" enctype="multipart/form-data")
+                                                            input(type="hidden" value=`${produk.id}` name="id")
+                                                            input(type="hidden" value=`${produk.foto}` name="fotoLama")
+                                                            div.row
+                                                                div.form-group
+                                                                    label(for="kode_produk" class="control-label col") Kode Produk
+                                                                    div.col-sm-12
+                                                                        input(type="text" class="form-control" id="kode_produk" placeholder="Masukan Kode Produk" name="kode_produk" value=`${produk.kode_produk}` required)
+                                                                div.form-group
+                                                                    label(for="nama_produk" class="control-label col") Nama Produk
+                                                                    div.col-sm-12
+                                                                        input(type="text" class="form-control" id="nama_produk" placeholder="Masukan Nama Produk" name="nama_produk" value=`${produk.nama_produk}` required)
+                                                                div.form-group
+                                                                    label(for="kategori" class="control-label col") Kategori
+                                                                    div.col-sm-12
+                                                                        select.form-control(name="kategori" id="kategori" required)
+                                                                            option(selected disabled) ---Pilih Kategori---
+                                                                            if (produk.kategori === 'Fashion')
+                                                                                option(value="Fashion" selected) Fashion
+                                                                                option(value="Aksesoris") Aksesoris
+                                                                            else
+                                                                                option(value="Fashion") Fashion
+                                                                                option(value="Aksesoris" selected) Aksesoris
+                                                                div.form-group
+                                                                    label(for="harga_produk" class="control-label col") Harga Produk
+                                                                    div.col-sm-12
+                                                                        input(type="text" class="form-control" id="harga_produk" placeholder="Masukan Harga Produk" name="harga_produk" value=`${produk.harga_produk}` required)
+                                                                div.form-group
+                                                                    label(for="stok_produk" class="control-label col") Stok Produk
+                                                                    div.col-sm-12
+                                                                        input(type="text" class="form-control" id="stok_produk" placeholder="Masukan Stok Produk" name="stok_produk" value=`${produk.stok_produk}` required)
+                                                                div.form-group
+                                                                    label(for="foto" class="control-label col") Foto
+                                                                    div.col-sm-12
+                                                                        input(type="file" id="foto" name="foto")
+                                                                div.row
+                                                                    div.col-md-12
+                                                                        img(src="/img/produk/"+ produk['foto'], alt="", width="100px")
+                                                                div.modal-footer 
+                                                                    button(type="button" class="btn btn-secondary" data-dismiss="modal") Batal
+                                                                    button(type="submit" class="btn btn-primary") Edit
+                                    for produk in produks
+                                        div.modal.fade(id=`deleteProduk-${produk.id}` tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true") 
+                                            div.modal-dialog.modal-dialog-centered(role="document") 
+                                                div.modal-content
+                                                    div.modal-header
+                                                        h5.modal-title#exampleModalCenterTitle Form Edit Produk
+                                                        button(type="button" class="close" data-dismiss="modal" aria-label="Close") 
+                                                            span(aria-hidden="true") &times;
+                                                    div.modal-body
+                                                        form(action="/deleteProduk" method="post" enctype="multipart/form-data")
+                                                            strong Anda yakin menghapus data ini ? 
+                                                            div.modal-footer
+                                                                input(type="hidden" name="id" class="form-control " required value=`${produk.id}`)
+                                                                input(type="hidden" name="foto" class="form-control " value=`${produk.foto}` required)
+                                                                button(type="button" class="btn btn-secondary" data-dismiss="modal") Batal
+                                                                button(type="submit" class="btn btn-primary") Hapus
+                                    - var no = 1;
+                                    div.table-responsive.p-3
+                                        table.table.align-items-center.table-flush.table-hover#dataTableHover
+                                            thead.thead-light
+                                                tr
+                                                    th No 
+                                                    th Kode Produk
+                                                    th Nama Produk
+                                                    th Kategori
+                                                    th Harga
+                                                    th Stok
+                                                    th Foto
+                                                    th Aksi
+                                            tbody
+                                                for produk in produks
+                                                    tr 
+                                                        td= no++
+                                                        td #{produk.kode_produk}
+                                                        td #{produk.nama_produk}
+                                                        td #{produk.kategori}
+                                                        td #{produk.harga_produk}
+                                                        td #{produk.stok_produk}
+                                                        td #[img(src="/img/produk/"+ produk['foto'], alt="", width="100px")]
+                                                        td #[a.btn.btn-outline-success(href=`#editModal-${produk.id}` data-toggle="modal") #[i.fa.fa-fw.fa-pen]] #[a.btn.btn-outline-danger(href=`#deleteProduk-${produk.id}`, data-toggle="modal") #[i.fa.fa-fw.fa-trash]]
+                        //- Row
+                        //- end content
+                //- footer
+                include templates/footer.pug
+                //- end footer
+        //- untuk scroll ke atas
+        a.scroll-to-top.rounded(href="#page-top")
+            i.fas.fa-angle-up
+        //-  embed script
+        script(src="./vendor/jquery/jquery.min.js")
+        script(src="./vendor/bootstrap/js/bootstrap.bundle.min.js")
+        script(src="./vendor/jquery-easing/jquery.easing.min.js")
+        script(src="./js/ruang-admin.min.js")
+        script(src="./vendor/datatables/jquery.dataTables.min.js")
+        script(src="./vendor/datatables/dataTables.bootstrap4.min.js")
+        script.
+            $(document).ready(function () {
+                $('#dataTableHover').DataTable(); // ID From dataTable with Hover
+            });
+        //- end embed script
+            

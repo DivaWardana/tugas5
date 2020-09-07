@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+html(lang="en")
+    //- header
+    include templates/header.pug
+    link(href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet")
+    //- end header
+    body#page-top
+        div#wrapper
+            //- sidebar
+            include templates/sidebar.pug
+            //- end sidebar
+            div#content-wrapper.d-flex.flex-column
+                //- content
+                div.content
+                    //- navbar
+                    include templates/navbar.pug
+                    //- end navbar
+                    div.container-fluid#container-wrapper
+                        div.d-sm-flex.align-items-center.justify-content-between.mb-4 
+                            h1.h3.mb-0.text-gray-800 Users
+                            ol.breadcrumb 
+                                li.breadcrumb-item #[a(href="/index") Home]
+                                li.breadcrumb-item Master Data
+                                li.breadcrumb-item.active(aria-current="page") Users 
+                        //- Row
+                        div.row 
+                            //- Datatables
+                            div.col-lg-12
+                                div.card.mb-4 
+                                    div.card-header.py-3.d-flex.flex-row.align-items-center.justify-content-between 
+                                        h6.m-0.font-weight-bold.text-primary Data Users
+                                        button(type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#exampleModalCenter" id="#modalCenter") #[i.fa.fa-fw.fa-plus]
+                                    div.modal.fade#exampleModalCenter(tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true") 
+                                        div.modal-dialog.modal-dialog-centered.modal-lg(role="document") 
+                                            div.modal-content
+                                                div.modal-header
+                                                    h5.modal-title#exampleModalCenterTitle Form Tambah Users
+                                                    button(type="button" class="close" data-dismiss="modal" aria-label="Close") 
+                                                        span(aria-hidden="true") &times;
+                                                div.modal-body
+                                                    form(action="/users/add" method="post")
+                                                        div.row
+                                                            div.form-group
+                                                                label(for="username" class="control-label col") Username
+                                                                div.col-sm-12
+                                                                    input(type="text" class="form-control" id="username" placeholder="Masukan Username" name="username")
+                                                            div.form-group
+                                                                label(for="email" class="control-label col") Email
+                                                                div.col-sm-12
+                                                                    input(type="email" class="form-control" id="email" placeholder="Masukan Email" name="email")
+                                                            div.form-group
+                                                                label(for="password" class="control-label col") Password
+                                                                div.col-sm-12
+                                                                    input(type="password" class="form-control" id="password" placeholder="Masukan Password" name="password")
+                                                            div.modal-footer.ml-auto
+                                                                button(type="button" class="btn btn-secondary" data-dismiss="modal") Batal
+                                                                button(type="submit" class="btn btn-primary") Simpan
+                                    div.modal.fade#modalEdit(tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true") 
+                                        div.modal-dialog.modal-dialog-centered.modal-lg(role="document") 
+                                            div.modal-content
+                                                div.modal-header
+                                                    h5.modal-title#exampleModalCenterTitle Form Edit Users
+                                                    button(type="button" class="close" data-dismiss="modal" aria-label="Close") 
+                                                        span(aria-hidden="true") &times;
+                                                div.modal-body
+                                                    form(action="/users/edit" method="post")
+                                                        div.row
+                                                            div.form-group
+                                                                label(for="username" class="control-label col") Username
+                                                                div.col-sm-12
+                                                                    input(type="text" class="form-control username" id="username" placeholder="Masukan Username" name="username")
+                                                            div.form-group
+                                                                label(for="email" class="control-label col") Email
+                                                                div.col-sm-12
+                                                                    input(type="email" class="form-control email" id="email" placeholder="Masukan Email" name="email")
+                                                            div.modal-footer.ml-auto
+                                                                <input type="hidden" name="id" class="form-control id" required>
+                                                                button(type="button" class="btn btn-secondary" data-dismiss="modal") Batal
+                                                                button(type="submit" class="btn btn-primary") Edit
+                                    form#add-row-form(action="/deleteUser" method="post")
+                                        div.modal.fade#modalHapus(tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true") 
+                                            div.modal-dialog.modal-dialog-centered.modal(role="document") 
+                                                div.modal-content
+                                                    div.modal-header
+                                                        h5.modal-title#exampleModalCenterTitle Hapus Users
+                                                        button(type="button" class="close" data-dismiss="modal" aria-label="Close") 
+                                                            span(aria-hidden="true") &times;
+                                                    div.modal-body
+                                                        strong Anda yakin menghapus data ini ? 
+                                                    div.modal-footer.ml-auto
+                                                        <input type="hidden" name="id" class="form-control id2" required>
+                                                        button(type="button" class="btn btn-secondary" data-dismiss="modal") Batal
+                                                        button(type="submit" class="btn btn-primary") Delete
+                                    - var no = 1;
+                                    div.table-responsive.p-3
+                                        table.table.align-items-center.table-flush.table-hover#dataTableHover
+                                            thead.thead-light
+                                                tr
+                                                    th No 
+                                                    th Username
+                                                    th Email
+                                                    th Aksi
+                                            tbody
+                                                for user in users
+                                                    tr 
+                                                        td= no++
+                                                        td #{user.username}
+                                                        td #{user.email}
+                                                        td #[a.btn.btn-outline-success.edit(href="javascript:void(0)" data-id= user['id'], data-username = user['username'], data-email= user['email']) #[i.fa.fa-fw.fa-pen]] #[a.btn.btn-outline-danger.delete(href="javascript:void(0);" data-id = user['id']) #[i.fa.fa-fw.fa-trash]]
+                        //- Row
+                        //- end content
+                //- footer
+                include templates/footer.pug
+                //- end footer
+        //- untuk scroll ke atas
+        a.scroll-to-top.rounded(href="#page-top")
+            i.fas.fa-angle-up
+        //-  embed script
+        script(src="./vendor/jquery/jquery.min.js")
+        script(src="./vendor/bootstrap/js/bootstrap.bundle.min.js")
+        script(src="./vendor/jquery-easing/jquery.easing.min.js")
+        script(src="./js/ruang-admin.min.js")
+        script(src="./vendor/datatables/jquery.dataTables.min.js")
+        script(src="./vendor/datatables/dataTables.bootstrap4.min.js")
+        script.
+            $(document).ready(function () {
+                $('#dataTableHover').DataTable(); // ID From dataTable with Hover
+            });
+
+            $(document).ready(function(){
+            //tampilkan data ke modal untuk edit
+            $('#dataTableHover').on('click','.edit',function(){
+                var id = $(this).data('id');
+                var username = $(this).data('username');
+                var email = $(this).data('email');
+                $('#modalEdit').modal('show');
+                $('.username').val(username);
+                $('.email').val(email);
+                $('.id').val(id);
+            });
+            //tampilkan modal hapus record
+            $('#dataTableHover').on('click','.delete',function(){
+                var id = $(this).data('id');
+                $('#modalHapus').modal('show');
+                console.log(id)
+                $('.id2').val(id);
+            });
+        
+            });
+        //- end embed script
+            

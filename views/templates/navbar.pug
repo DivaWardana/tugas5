@@ -1,0 +1,12 @@
+nav.navbar.navbar-expand.navbar-light.bg-navbar.topbar.mb-4.static-top
+                        button#sidebarToggleTop.btn.btn-link.rounded-circle.mr-3
+                            i.fa.fa-bars
+                        ul.navbar-nav.ml-auto
+                            div.topbar-divider.d-none.d-sm-block
+                            li.nav-item.dropdown.no-arrow
+                                a.nav-link.dropdown-toggle#userDropdown(href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false")
+                                    //- img.img-profile.rounded-circle(src="img/boy.png", alt="" style="max-width:60px;")
+                                    span.ml-2.d-none.d-lg-inline.text-white #{usersname}
+                                div.dropdown-menu.dropdown-menu-right.shadow.animated--grow-in(aria-labelledby="userDropdown")
+                                    a.dropdown-item(href="/logout") 
+                                        i.fas.fa-sign-out-alt.fa-sm.fa-fw.mr-2.text-gray &nbsp;Logout

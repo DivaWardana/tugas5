@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Auth
+        
+        link(rel="stylesheet", href="./css/login.css")
+        script(src='https://kit.fontawesome.com/64d58efce2.js' crossorigin="anonymous")
+    body
+        div.container
+            div.forms-container
+                div.signin-signup
+                    form.sign-in-form(action="/", method="post")
+                        h2.title Sign in
+                        if msg
+                            p(style="color:red;") #{msg}
+                        div.input-field
+                            i.fas.fa-user
+                            input(type="text", name="username" placeholder="Username" required)
+                        div.input-field
+                            i.fas.fa-lock
+                            input(type="password", name="password" placeholder="Password" required)
+                        input.btn.solid(type="submit", value="Login")
+                        p.social-text Or Sign in with social platforms
+                        div.social-media
+                            a.social-icon(href="#")
+                                i.fab.fa-facebook-f
+                            a.social-icon(href="#")
+                                i.fab.fa-twitter
+                            a.social-icon(href="#")
+                                i.fab.fa-google
+                            a.social-icon(href="#")
+                                i.fab.fa-linkedin-in
+                    form(action="/register" method="post" class="sign-up-form")
+                        h2.title Sign up
+                        div.input-field
+                            i.fas.fa-user
+                            input(type="text", name="username" placeholder="Username" required)
+                        div.input-field
+                            i.fas.fa-envelope
+                            input(type="email", name="email" placeholder="Email" required)
+                        div.input-field
+                            i.fas.fa-lock
+                            input(type="password", name="password" placeholder="Password" required)
+                        input.btn(type="submit", value="Sign up")
+                        p.social-text Or Sign up with social platforms
+                        div.social-media
+                            a.social-icon(href="#")
+                                i.fab.fa-facebook-f
+                            a.social-icon(href="#")
+                                i.fab.fa-twitter
+                            a.social-icon(href="#")
+                                i.fab.fa-google
+                            a.social-icon(href="#")
+                                i.fab.fa-linkedin-in
+            div.panels-container
+                div.panel.left-panel
+                    div.content
+                        h3 New here ?
+                        p Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis, ex ratione. Aliquid!
+                        button.btn.transparent#sign-up-btn Sign up
+                    img.image(src="./img/log.svg" alt="image")
+                div.panel.right-panel
+                    div.content
+                        h3 One of us ?
+                        p Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis, ex ratione. Aliquid!
+                        button.btn.transparent#sign-in-btn Sign in
+                    img.image(src="./img/register.svg", alt="image")
+        script(src="./js/login.js")
